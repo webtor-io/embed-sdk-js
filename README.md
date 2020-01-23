@@ -28,7 +28,7 @@ Player SDK for online torrent streaming on your site
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8"></script>
 ...
 ```
-[Here is live example](https://jsbin.com/divatujoma/edit?html,output)
+[Here is live example](https://jsbin.com/cevugup/edit?html,output)
 
 ## Player configuration
 Attribute  | Description
@@ -37,3 +37,10 @@ id         | Element id where player will be embedded
 magnet     | Magnet-uri
 torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side )
 theme      | Can be "light" or "dark". If not set theme will be selected automatically
+on         | Callback-function to capture player events
+
+## Player events
+Name            | Description
+----------------|-------------
+TORRENT_FETCHED | Indicates that torrent has been loaded
+TORRENT_ERROR   | Indicates if some error has occured during loading (timeout, wrong url, etc...)
