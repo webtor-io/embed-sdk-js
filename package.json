@@ -1,0 +1,43 @@
+{
+  "name": "@webtor/player-sdk-js",
+  "version": "0.1.0",
+  "description": "Player SDK for online torrent streaming",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webtor-io/player-sdk-js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "watch": "webpack --watch"
+  },
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "webtor",
+    "torrent",
+    "streaming",
+    "sdk",
+    "player"
+  ],
+  "homepage": "https://webtor.io",
+  "author": "Pavel Tatarskiy",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "terser-webpack-plugin": "^2.3.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.7",
+    "debug": "^4.1.1",
+    "iframe-resizer": "^4.2.9"
+  }
+}

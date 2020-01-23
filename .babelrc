@@ -1,0 +1,13 @@
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/transform-runtime"
+    // "transform-decorators-legacy"
+  ],
+  "env": {
+    "production": {
+      // "presets": ["minify"]
+    }
+  }
+}
