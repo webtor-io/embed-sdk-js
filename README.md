@@ -28,6 +28,7 @@ Player SDK for online torrent streaming on your site
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8"></script>
 ...
 ```
+[Here is live example](https://jsbin.com/divatujoma/edit?html,output)
 
 ## Player configuration
 Attribute  | Description
