@@ -2954,6 +2954,8 @@ function () {
       iframe.id = elId;
       iframe.width = data.width;
       iframe.setAttribute('allowFullScreen', '');
+      iframe.setAttribute('webkitAllowFullScreen', '');
+      iframe.setAttribute('mozAllowFullScreen', '');
       iframe.scrolling = 'no';
       iframe.frameBorder = '0';
 
