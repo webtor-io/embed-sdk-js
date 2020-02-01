@@ -9,6 +9,7 @@ const defaults = {
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
     TORRENT_ERROR = 'torrent error';
+    INIT = 'init';
 
     push(data) {
         const id = uuid();
@@ -16,6 +17,12 @@ class WebtorGenerator {
         data = Object.assign(defaults, data);
         const el = document.getElementById(data.id);
         if (!el) throw `Failed to find element with id "${data.id}"`;
+        if (data.torrentUrl && data.magnet) {
+            throw `There should be only one magnet or torrentUrl`;
+        }
+        if (!data.torrentUrl && !data.magnet) {
+            throw `magnet or torrentUrl required`;
+        }
         const params = {
             id,
             magnet: data.magnet,
@@ -24,12 +31,6 @@ class WebtorGenerator {
             torrent_url: data.torrentUrl,
         };
         Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
-        if (params.torrent_url && params.magnet) {
-            throw `There should be only one magnet or torrentUrl`;
-        }
-        if (!params.torrent_url && !params.magnet) {
-            throw `magnet or torrentUrl required`;
-        }
         const paramString = new URLSearchParams(params)
         const url = `${data.baseUrl}/show?${paramString.toString()}`;
         const iframe = document.createElement('iframe');
@@ -49,10 +50,17 @@ class WebtorGenerator {
         iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
         el.appendChild(iframe);
         iframe.src = url;
+        const self = this;
         window.addEventListener('message', function(event) {
             const d = event.data;
             if (typeof d === 'object') {
                 if (d.id == id && typeof data.on === 'function') {
+                    if (d.name == self.INIT) {
+                        iframe.contentWindow.postMessage({id, name: 'init', data: {
+                            magnet: data.magnet,
+                            torrentUrl: data.torrentUrl,
+                        }}, '*');
+                    }
                     data.on(d);
                 }
             }

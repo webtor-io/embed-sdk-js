@@ -2919,6 +2919,8 @@ function () {
     defineProperty_default()(this, "TORRENT_FETCHED", 'torrent fetched');
 
     defineProperty_default()(this, "TORRENT_ERROR", 'torrent error');
+
+    defineProperty_default()(this, "INIT", 'init');
   }
 
   createClass_default()(WebtorGenerator, [{
@@ -2929,6 +2931,15 @@ function () {
       data = Object.assign(defaults, data);
       var el = document.getElementById(data.id);
       if (!el) throw "Failed to find element with id \"".concat(data.id, "\"");
+
+      if (data.torrentUrl && data.magnet) {
+        throw "There should be only one magnet or torrentUrl";
+      }
+
+      if (!data.torrentUrl && !data.magnet) {
+        throw "magnet or torrentUrl required";
+      }
+
       var params = {
         id: id,
         magnet: data.magnet,
@@ -2939,15 +2950,6 @@ function () {
       Object.keys(params).forEach(function (key) {
         return params[key] === undefined ? delete params[key] : {};
       });
-
-      if (params.torrent_url && params.magnet) {
-        throw "There should be only one magnet or torrentUrl";
-      }
-
-      if (!params.torrent_url && !params.magnet) {
-        throw "magnet or torrentUrl required";
-      }
-
       var paramString = new URLSearchParams(params);
       var url = "".concat(data.baseUrl, "/show?").concat(paramString.toString());
       var iframe = document.createElement('iframe');
@@ -2969,11 +2971,23 @@ function () {
       iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
       el.appendChild(iframe);
       iframe.src = url;
+      var self = this;
       window.addEventListener('message', function (event) {
         var d = event.data;
 
         if (typeof_default()(d) === 'object') {
           if (d.id == id && typeof data.on === 'function') {
+            if (d.name == self.INIT) {
+              iframe.contentWindow.postMessage({
+                id: id,
+                name: 'init',
+                data: {
+                  magnet: data.magnet,
+                  torrentUrl: data.torrentUrl
+                }
+              }, '*');
+            }
+
             data.on(d);
           }
         }
