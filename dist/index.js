@@ -2907,7 +2907,9 @@ var defaults = {
   baseUrl: 'https://webtor.io',
   // baseUrl: 'http://localhost:4000',
   width: '800px',
-  mode: 'video'
+  mode: 'video',
+  subtitles: [],
+  poster: null
 };
 
 var WebtorGenerator_WebtorGenerator =
@@ -2942,10 +2944,10 @@ function () {
 
       var params = {
         id: id,
-        magnet: data.magnet,
+        // magnet: data.magnet,
         mode: data.mode,
-        theme: data.theme,
-        torrent_url: data.torrentUrl
+        theme: data.theme // torrent_url: data.torrentUrl,
+
       };
       Object.keys(params).forEach(function (key) {
         return params[key] === undefined ? delete params[key] : {};
@@ -2983,7 +2985,9 @@ function () {
                 name: 'init',
                 data: {
                   magnet: data.magnet,
-                  torrentUrl: data.torrentUrl
+                  torrentUrl: data.torrentUrl,
+                  subtitles: data.subtitles,
+                  poster: data.poster
                 }
               }, '*');
             }

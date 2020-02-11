@@ -23,6 +23,14 @@ Player SDK for online torrent streaming on your site
                     console.log('Torrent error!')
                 }
             },
+            poster: 'https://via.placeholder.com/150/0000FF/808080?Text=Sintel',
+            subtitles: [
+                {
+                    srclang: 'en',
+                    label: 'test',
+                    src: 'https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt',
+                }
+            ],
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8"></script>
@@ -37,7 +45,9 @@ id         | Element id where player will be embedded
 magnet     | Magnet-uri
 torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side )
 theme      | Can be "light" or "dark". If not set theme will be selected automatically
+poster     | Url to the poster image
 on         | Callback-function to capture player events
+subtitles  | Array of subtitles. Every subtitle **MUST** include `srclang`, `label`, `src`
 
 ## Player events
 Name            | Description
