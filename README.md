@@ -48,6 +48,7 @@ theme      | Can be "light" or "dark". If not set theme will be selected automat
 poster     | Url to the poster image
 on         | Callback-function to capture player events
 subtitles  | Array of subtitles. Every subtitle **MUST** include `srclang`, `label`, `src`
+width      | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default) 
 
 ## Player events
 Name            | Description
