@@ -1,12 +1,15 @@
 import uuid from './uuid';
 import {iframeResize} from 'iframe-resizer';
 const defaults = {
-    baseUrl:   'https://webtor.io',
+    baseUrl:    'https://webtor.io',
     // baseUrl: 'http://localhost:4000',
-    width:     '800px',
-    mode:      'video',
-    subtitles: [],
-    poster:    null,
+    width:      '800px',
+    mode:       'video',
+    subtitles:  [],
+    poster:     null,
+    header:     true,
+    title:      null,
+    imdbId:     null,
 };
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
@@ -58,12 +61,7 @@ class WebtorGenerator {
             if (typeof d === 'object') {
                 if (d.id == id && typeof data.on === 'function') {
                     if (d.name == self.INIT) {
-                        iframe.contentWindow.postMessage({id, name: 'init', data: {
-                            magnet: data.magnet,
-                            torrentUrl: data.torrentUrl,
-                            subtitles: data.subtitles,
-                            poster: data.poster,
-                        }}, '*');
+                        iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(data))}, '*');
                     }
                     data.on(d);
                 }

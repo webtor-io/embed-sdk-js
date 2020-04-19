@@ -2909,7 +2909,10 @@ var defaults = {
   width: '800px',
   mode: 'video',
   subtitles: [],
-  poster: null
+  poster: null,
+  header: true,
+  title: null,
+  imdbId: null
 };
 
 var WebtorGenerator_WebtorGenerator =
@@ -2983,12 +2986,7 @@ function () {
               iframe.contentWindow.postMessage({
                 id: id,
                 name: 'init',
-                data: {
-                  magnet: data.magnet,
-                  torrentUrl: data.torrentUrl,
-                  subtitles: data.subtitles,
-                  poster: data.poster
-                }
+                data: JSON.parse(JSON.stringify(data))
               }, '*');
             }
 

@@ -42,12 +42,15 @@ Player SDK for online torrent streaming on your site
 Attribute  | Description
 -----------|-------------
 id         | Element id where player will be embedded
-magnet     | Magnet-uri
-torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side )
-theme      | Can be "light" or "dark". If not set theme will be selected automatically
-poster     | Url to the poster image
-on         | Callback-function to capture player events
-subtitles  | Array of subtitles. Every subtitle **MUST** include `srclang`, `label`, `src`
+magnet     | Magnet-uri (torrentUrl ot magnet is required)
+torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side)
+theme      | Can be "light" or "dark". If not set theme will be selected automatically (optional)
+poster     | Url to the poster image (optional)
+on         | Callback-function to capture player events (optional)
+subtitles  | Array of subtitles. Every subtitle **MUST** include `srclang`, `label`, `src` (optional)
+title      | Replaces original file name in a header with specific title (optional)
+imdbId     | Helps to find subtitles and additional metadata (optional)
+header     | Shows header with current progress and title (true/false, default: true)
 
 ## Player events
 Name            | Description
