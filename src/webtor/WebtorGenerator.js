@@ -4,6 +4,7 @@ const defaults = {
     baseUrl:    'https://webtor.io',
     // baseUrl: 'http://localhost:4000',
     width:      '800px',
+    height:     null,
     mode:       'video',
     subtitles:  [],
     poster:     null,
@@ -40,7 +41,8 @@ class WebtorGenerator {
         const url = `${data.baseUrl}/show?${paramString.toString()}`;
         const iframe = document.createElement('iframe');
         iframe.id = elId;
-        iframe.width = data.width;
+        if (data.width)  iframe.width = data.width;
+        if (data.height) iframe.height = data.height;
         iframe.setAttribute('allowFullScreen', '');
         iframe.setAttribute('webkitAllowFullScreen', '');
         iframe.setAttribute('mozAllowFullScreen', '');
@@ -49,6 +51,7 @@ class WebtorGenerator {
         iframe.onload = () => {
             iframeResize({
                 heightCalculationMethod: 'taggedElement',
+                // widthCalculationMethod: 'taggedElement',
                 checkOrigin: false,
             }, `#${elId}`);
         }

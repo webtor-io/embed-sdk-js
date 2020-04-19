@@ -2907,6 +2907,7 @@ var defaults = {
   baseUrl: 'https://webtor.io',
   // baseUrl: 'http://localhost:4000',
   width: '800px',
+  height: null,
   mode: 'video',
   subtitles: [],
   poster: null,
@@ -2959,7 +2960,8 @@ function () {
       var url = "".concat(data.baseUrl, "/show?").concat(paramString.toString());
       var iframe = document.createElement('iframe');
       iframe.id = elId;
-      iframe.width = data.width;
+      if (data.width) iframe.width = data.width;
+      if (data.height) iframe.height = data.height;
       iframe.setAttribute('allowFullScreen', '');
       iframe.setAttribute('webkitAllowFullScreen', '');
       iframe.setAttribute('mozAllowFullScreen', '');
@@ -2969,6 +2971,7 @@ function () {
       iframe.onload = function () {
         Object(iframe_resizer["iframeResize"])({
           heightCalculationMethod: 'taggedElement',
+          // widthCalculationMethod: 'taggedElement',
           checkOrigin: false
         }, "#".concat(elId));
       };
