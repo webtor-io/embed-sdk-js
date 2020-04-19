@@ -43,6 +43,7 @@ Attribute  | Description
 -----------|-------------
 id         | Element id where player will be embedded
 magnet     | Magnet-uri (torrentUrl ot magnet is required)
+width      | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default) 
 torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side)
 theme      | Can be "light" or "dark". If not set theme will be selected automatically (optional)
 poster     | Url to the poster image (optional)
