@@ -2913,7 +2913,8 @@ var defaults = {
   poster: null,
   header: true,
   title: null,
-  imdbId: null
+  imdbId: null,
+  path: null
 };
 
 var WebtorGenerator_WebtorGenerator =

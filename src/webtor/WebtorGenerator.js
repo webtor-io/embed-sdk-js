@@ -11,6 +11,7 @@ const defaults = {
     header:     true,
     title:      null,
     imdbId:     null,
+    path:       null,
 };
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';

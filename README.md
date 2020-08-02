@@ -53,6 +53,7 @@ subtitles  | Array of subtitles. Every subtitle **MUST** include `srclang`, `lab
 title      | Replaces original file name in a header with specific title (optional)
 imdbId     | Helps to find subtitles and additional metadata (optional)
 header     | Shows header with current progress and title (true/false, default: true)
+path       | File path of file to be played (optional). By default it searches for the first video in torrent.
 
 ## Player events
 Name            | Description
