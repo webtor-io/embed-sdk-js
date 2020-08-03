@@ -110,6 +110,8 @@ module.exports = _defineProperty;
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
       return typeof obj;
@@ -170,7 +172,7 @@ module.exports = __webpack_require__(5)
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const iframeResize = __webpack_require__(6)
+var iframeResize = __webpack_require__(6)
 
 exports.iframeResize = iframeResize
 exports.iframeResizer = iframeResize // Backwards compatability
@@ -192,7 +194,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 
 // eslint-disable-next-line sonarjs/cognitive-complexity, no-shadow-restricted-names
-;(function(undefined) {
+;(function (undefined) {
   if (typeof window === 'undefined') return // don't run for server side render
 
   var count = 0,
@@ -236,16 +238,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       warningTimeout: 5000,
       tolerance: 0,
       widthCalculationMethod: 'scroll',
-      onClose: function() {
+      onClose: function () {
         return true
       },
-      onClosed: function() {},
-      onInit: function() {},
-      onMessage: function() {
+      onClosed: function () {},
+      onInit: function () {},
+      onMessage: function () {
         warn('onMessage function not defined')
       },
-      onResized: function() {},
-      onScroll: function() {
+      onResized: function () {},
+      onScroll: function () {
         return true
       }
     }
@@ -281,7 +283,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       // Firefox extension content-scripts have a globalThis object that is not the same as window.
       // Binding `requestAnimationFrame` to window allows the function to work and prevents errors
       // being thrown when run in that context, and should be a no-op in every other context.
-      requestAnimationFrame = requestAnimationFrame.bind(window);
+      requestAnimationFrame = requestAnimationFrame.bind(window)
     }
   }
 
@@ -342,8 +344,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
     function processMsg() {
       var data = msg.substr(msgIdLen).split(':')
-      var height = data[1] ? parseInt(data[1], 10) : 0;
-      var iframe = settings[data[0]] && settings[data[0]].iframe;
+      var height = data[1] ? parseInt(data[1], 10) : 0
+      var iframe = settings[data[0]] && settings[data[0]].iframe
       var compStyle = getComputedStyle(iframe)
 
       return {
@@ -357,19 +359,25 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
     function getPaddingEnds(compStyle) {
       if (compStyle.boxSizing !== 'border-box') {
-        return 0;
+        return 0
       }
       var top = compStyle.paddingTop ? parseInt(compStyle.paddingTop, 10) : 0
-      var bot = compStyle.paddingBottom ? parseInt(compStyle.paddingBottom, 10) : 0
+      var bot = compStyle.paddingBottom
+        ? parseInt(compStyle.paddingBottom, 10)
+        : 0
       return top + bot
     }
 
     function getBorderEnds(compStyle) {
       if (compStyle.boxSizing !== 'border-box') {
-        return 0;
+        return 0
       }
-      var top = compStyle.borderTopWidth ? parseInt(compStyle.borderTopWidth, 10) : 0
-      var bot = compStyle.borderBottomWidth ? parseInt(compStyle.borderBottomWidth, 10) : 0
+      var top = compStyle.borderTopWidth
+        ? parseInt(compStyle.borderTopWidth, 10)
+        : 0
+      var bot = compStyle.borderBottomWidth
+        ? parseInt(compStyle.borderBottomWidth, 10)
+        : 0
       return top + bot
     }
 
@@ -524,7 +532,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           }
         }
 
-        ;['scroll', 'resize'].forEach(function(evt) {
+        ;['scroll', 'resize'].forEach(function (evt) {
           log(id, type + evt + ' listener for sendPageInfo')
           func(window, evt, sendPageInfo)
         })
@@ -947,9 +955,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   function syncResize(func, messageData, doNotSync) {
     /* istanbul ignore if */ // Not testable in PhantomJS
-    if (doNotSync !== messageData.type && requestAnimationFrame &&
-        // including check for jasmine because had trouble getting spy to work in unit test using requestAnimationFrame
-        !window.jasmine) {
+    if (
+      doNotSync !== messageData.type &&
+      requestAnimationFrame &&
+      // including check for jasmine because had trouble getting spy to work in unit test using requestAnimationFrame
+      !window.jasmine
+    ) {
       log(messageData.id, 'Requesting animation frame')
       requestAnimationFrame(func)
     } else {
@@ -1199,7 +1210,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             settings[iframeId].iframe
           ),
 
-          moveToAnchor: function(anchor) {
+          moveToAnchor: function (anchor) {
             trigger(
               'Move to anchor',
               'moveToAnchor:' + anchor,
@@ -1208,7 +1219,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             )
           },
 
-          sendMessage: function(message) {
+          sendMessage: function (message) {
             message = JSON.stringify(message)
             trigger(
               'Send Message',
@@ -1235,10 +1246,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           return
         }
 
-        var destroyObserver = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
+        var destroyObserver = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
             var removedNodes = Array.prototype.slice.call(mutation.removedNodes) // Transform NodeList into an Array
-            removedNodes.forEach(function(removedNode) {
+            removedNodes.forEach(function (removedNode) {
               if (removedNode === iframe) {
                 closeIFrame(iframe)
               }
@@ -1280,7 +1291,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     }
 
     function getTargetOrigin(remoteHost) {
-      return '' === remoteHost || null !== remoteHost.match(/^(about:blank|javascript:|file:\/\/)/) ? '*' : remoteHost
+      return '' === remoteHost ||
+        null !== remoteHost.match(/^(about:blank|javascript:|file:\/\/)/)
+        ? '*'
+        : remoteHost
     }
 
     function depricate(key) {
@@ -1307,12 +1321,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       settings[iframeId] = {
         firstRun: true,
         iframe: iframe,
-        remoteHost:
-          iframe.src &&
-          iframe.src
-            .split('/')
-            .slice(0, 3)
-            .join('/')
+        remoteHost: iframe.src && iframe.src.split('/').slice(0, 3).join('/')
       }
 
       checkOptions(options)
@@ -1347,7 +1356,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   function debouce(fn, time) {
     if (null === timer) {
-      timer = setTimeout(function() {
+      timer = setTimeout(function () {
         timer = null
         fn()
       }, time)
@@ -1357,7 +1366,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   var frameTimer = {}
   function debounceFrameEvents(fn, time, frameId) {
     if (!frameTimer[frameId]) {
-      frameTimer[frameId] = setTimeout(function() {
+      frameTimer[frameId] = setTimeout(function () {
         frameTimer[frameId] = null
         fn()
       }, time)
@@ -1395,7 +1404,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         }
       }
 
-      Object.keys(settings).forEach(function(key) {
+      Object.keys(settings).forEach(function (key) {
         checkIFrame(key)
       })
     }
@@ -1461,7 +1470,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       )
     }
 
-    Object.keys(settings).forEach(function(iframeId) {
+    Object.keys(settings).forEach(function (iframeId) {
       if (isIFrameResizeEnabled(iframeId)) {
         trigger(eventName, event, settings[iframeId].iframe, iframeId)
       }
@@ -1471,7 +1480,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   function setupEventListeners() {
     addEventListener(window, 'message', iFrameListener)
 
-    addEventListener(window, 'resize', function() {
+    addEventListener(window, 'resize', function () {
       resizeIFrames('resize')
     })
 
@@ -1547,9 +1556,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           setupIFrame(element, options)
         }
 
-        return this.filter('iframe')
-          .each(init)
-          .end()
+        return this.filter('iframe').each(init).end()
       }
     }
   }
@@ -1583,7 +1590,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 
 // eslint-disable-next-line sonarjs/cognitive-complexity, no-shadow-restricted-names
-;(function(undefined) {
+;(function (undefined) {
   if (typeof window === 'undefined') return // don't run for server side render
 
   var autoResize = true,
@@ -1627,17 +1634,17 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     widthCalcModeDefault = 'scroll',
     widthCalcMode = widthCalcModeDefault,
     win = window,
-    onMessage = function() {
+    onMessage = function () {
       warn('onMessage function not defined')
     },
-    onReady = function() {},
-    onPageInfo = function() {},
+    onReady = function () {},
+    onPageInfo = function () {},
     customCalcMethods = {
-      height: function() {
+      height: function () {
         warn('Custom height calculation function not defined')
         return document.documentElement.offsetHeight
       },
-      width: function() {
+      width: function () {
         warn('Custom width calculation function not defined')
         return document.body.scrollWidth
       }
@@ -1652,7 +1659,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       {},
       {
         passive: {
-          get: function() {
+          get: function () {
             passiveSupported = true
           }
         }
@@ -1683,7 +1690,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       result,
       timeout = null,
       previous = 0,
-      later = function() {
+      later = function () {
         previous = getNow()
         timeout = null
         result = func.apply(context, args)
@@ -1693,7 +1700,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         }
       }
 
-    return function() {
+    return function () {
       var now = getNow()
 
       if (!previous) {
@@ -1728,7 +1735,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   var getNow =
     Date.now ||
-    function() {
+    function () {
       /* istanbul ignore next */ // Not testable in PhantonJS
       return new Date().getTime()
     }
@@ -1885,7 +1892,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
   function manageTriggerEvent(options) {
     var listener = {
-      add: function(eventName) {
+      add: function (eventName) {
         function handleEvent() {
           sendSize(options.eventName, options.eventType)
         }
@@ -1894,7 +1901,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
         addEventListener(window, eventName, handleEvent, { passive: true })
       },
-      remove: function(eventName) {
+      remove: function (eventName) {
         var handleEvent = eventHandlersByName[eventName]
         delete eventHandlersByName[eventName]
 
@@ -2245,7 +2252,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           onPageInfo = callback
           sendMsg(0, 0, 'pageInfo')
         } else {
-          onPageInfo = function() {}
+          onPageInfo = function () {}
           sendMsg(0, 0, 'pageInfoStop')
         }
       },
@@ -2305,7 +2312,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   function initInterval() {
     if (0 !== interval) {
       log('setInterval: ' + interval + 'ms')
-      intervalTimer = setInterval(function() {
+      intervalTimer = setInterval(function () {
         sendSize('interval', 'setInterval: ' + interval)
       }, Math.abs(interval))
     }
@@ -2393,7 +2400,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       observer = createMutationObserver()
 
     return {
-      disconnect: function() {
+      disconnect: function () {
         if ('disconnect' in observer) {
           log('Disconnect body MutationObserver')
           observer.disconnect()
@@ -2503,7 +2510,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         )
       },
 
-      offset: function() {
+      offset: function () {
         return getHeight.bodyOffset() // Backwards compatability
       },
 
@@ -2687,7 +2694,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       log('Trigger event lock on')
     }
     clearTimeout(triggerLockedTimer)
-    triggerLockedTimer = setTimeout(function() {
+    triggerLockedTimer = setTimeout(function () {
       triggerLocked = false
       log('Trigger event lock off')
       log('--')
@@ -2749,7 +2756,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
         init()
         firstRun = false
-        setTimeout(function() {
+        setTimeout(function () {
           initLock = false
         }, eventCancelTimer)
       },
@@ -2867,6 +2874,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
@@ -2902,6 +2910,13 @@ var iframe_resizer = __webpack_require__(4);
 
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
 
 var defaults = {
   baseUrl: 'https://webtor.io',
@@ -2913,13 +2928,10 @@ var defaults = {
   poster: null,
   header: true,
   title: null,
-  imdbId: null,
-  path: null
+  imdbId: null
 };
 
-var WebtorGenerator_WebtorGenerator =
-/*#__PURE__*/
-function () {
+var WebtorGenerator_WebtorGenerator = /*#__PURE__*/function () {
   function WebtorGenerator() {
     classCallCheck_default()(this, WebtorGenerator);
 
@@ -2951,7 +2963,9 @@ function () {
         id: id,
         // magnet: data.magnet,
         mode: data.mode,
-        theme: data.theme // torrent_url: data.torrentUrl,
+        theme: data.theme,
+        pwd: data.pwd,
+        file: data.file // torrent_url: data.torrentUrl,
 
       };
       Object.keys(params).forEach(function (key) {
@@ -3009,28 +3023,19 @@ function () {
     return new WebtorGenerator_WebtorGenerator();
   } else if (Array.isArray(data)) {
     var wg = new WebtorGenerator_WebtorGenerator();
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+
+    var _iterator = _createForOfIteratorHelper(data),
+        _step;
 
     try {
-      for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var d = _step.value;
         wg.push(d);
       }
     } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
+      _iterator.e(err);
     } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+      _iterator.f();
     }
 
     return wg;

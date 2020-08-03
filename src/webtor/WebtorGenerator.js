@@ -11,7 +11,6 @@ const defaults = {
     header:     true,
     title:      null,
     imdbId:     null,
-    path:       null,
 };
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
@@ -33,8 +32,10 @@ class WebtorGenerator {
         const params = {
             id,
             // magnet: data.magnet,
-            mode: data.mode,
+            mode:  data.mode,
             theme: data.theme,
+            pwd:   data.pwd,
+            file:  data.file,
             // torrent_url: data.torrentUrl,
         };
         Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
