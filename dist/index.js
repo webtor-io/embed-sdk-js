@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,66 +107,160 @@ module.exports = _defineProperty;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+"use strict";
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var iframe_resizer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var iframe_resizer__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(iframe_resizer__WEBPACK_IMPORTED_MODULE_2__);
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
+
+
+const defaults = {
+  baseUrl: 'https://webtor.io',
+  // baseUrl: 'http://localhost:4000',
+  width: '800px',
+  height: null,
+  mode: 'video',
+  subtitles: [],
+  poster: null,
+  header: true,
+  title: null,
+  imdbId: null,
+  version: "0.2.8"
+};
+
+class WebtorGenerator {
+  constructor() {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "TORRENT_FETCHED", 'torrent fetched');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "TORRENT_ERROR", 'torrent error');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "INIT", 'init');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "INJECT", 'inject');
   }
 
-  return _typeof(obj);
+  push(data) {
+    const id = Object(_uuid__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])();
+    const elId = `webtor-${id}`;
+    data = Object.assign(defaults, data);
+    const el = document.getElementById(data.id);
+    if (!el) throw `Failed to find element with id "${data.id}"`;
+
+    if (data.torrentUrl && data.magnet) {
+      throw `There should be only one magnet or torrentUrl`;
+    }
+
+    if (!data.torrentUrl && !data.magnet) {
+      throw `magnet or torrentUrl required`;
+    }
+
+    const params = {
+      id,
+      // magnet: data.magnet,
+      mode: data.mode,
+      theme: data.theme,
+      pwd: data.pwd,
+      file: data.file,
+      version: data.version // torrent_url: data.torrentUrl,
+
+    };
+    Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
+    const paramString = new URLSearchParams(params);
+    const url = `${data.baseUrl}/show?${paramString.toString()}`;
+    const iframe = document.createElement('iframe');
+    iframe.id = elId;
+    if (data.width) iframe.width = data.width;
+    if (data.height) iframe.height = data.height;
+    iframe.setAttribute('allowFullScreen', '');
+    iframe.setAttribute('webkitAllowFullScreen', '');
+    iframe.setAttribute('mozAllowFullScreen', '');
+    iframe.scrolling = 'no';
+    iframe.frameBorder = '0';
+
+    iframe.onload = () => {
+      Object(iframe_resizer__WEBPACK_IMPORTED_MODULE_2__["iframeResize"])({
+        heightCalculationMethod: 'taggedElement',
+        // widthCalculationMethod: 'taggedElement',
+        checkOrigin: false
+      }, `#${elId}`);
+    };
+
+    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    el.appendChild(iframe);
+    iframe.src = url;
+    const self = this;
+    window.addEventListener('message', function (event) {
+      const d = event.data;
+
+      if (typeof d === 'object') {
+        if (d.id == id) {
+          if (d.name == self.INIT) {
+            iframe.contentWindow.postMessage({
+              id,
+              name: 'init',
+              data: JSON.parse(JSON.stringify(data))
+            }, '*');
+          } else if (d.name == self.INJECT) {
+            eval(d.data);
+          } else if (typeof data.on === 'function') {
+            data.on(d);
+          }
+        }
+      }
+    });
+  }
+
 }
 
-module.exports = _typeof;
+/* harmony default export */ __webpack_exports__["a"] = (function (data) {
+  if (!data) {
+    return new WebtorGenerator();
+  } else if (Array.isArray(data)) {
+    const wg = new WebtorGenerator();
+
+    for (const d of data) {
+      wg.push(d);
+    }
+
+    return wg;
+  } else {
+    return data;
+  }
+});
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-module.exports = _classCallCheck;
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = (function () {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+  });
+});
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-module.exports = _createClass;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5)
 
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _webtor_WebtorGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+
+window.webtor = Object(_webtor_WebtorGenerator__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(window.webtor);
 
 /***/ }),
 /* 5 */
@@ -2868,188 +2962,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   
 })()
 
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(1);
-var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
-var classCallCheck = __webpack_require__(2);
-var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
-var createClass = __webpack_require__(3);
-var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(0);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
-
-// CONCATENATED MODULE: ./src/webtor/uuid.js
-/* harmony default export */ var uuid = (function () {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0,
-        v = c == 'x' ? r : r & 0x3 | 0x8;
-    return v.toString(16);
-  });
-});
-// EXTERNAL MODULE: ./node_modules/iframe-resizer/index.js
-var iframe_resizer = __webpack_require__(4);
-
-// CONCATENATED MODULE: ./src/webtor/WebtorGenerator.js
-
-
-
-
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
-
-var defaults = {
-  baseUrl: 'https://webtor.io',
-  // baseUrl: 'http://localhost:4000',
-  width: '800px',
-  height: null,
-  mode: 'video',
-  subtitles: [],
-  poster: null,
-  header: true,
-  title: null,
-  imdbId: null,
-  version: "0.2.7"
-};
-
-var WebtorGenerator_WebtorGenerator = /*#__PURE__*/function () {
-  function WebtorGenerator() {
-    classCallCheck_default()(this, WebtorGenerator);
-
-    defineProperty_default()(this, "TORRENT_FETCHED", 'torrent fetched');
-
-    defineProperty_default()(this, "TORRENT_ERROR", 'torrent error');
-
-    defineProperty_default()(this, "INIT", 'init');
-
-    defineProperty_default()(this, "INJECT", 'inject');
-  }
-
-  createClass_default()(WebtorGenerator, [{
-    key: "push",
-    value: function push(data) {
-      var id = uuid();
-      var elId = "webtor-".concat(id);
-      data = Object.assign(defaults, data);
-      var el = document.getElementById(data.id);
-      if (!el) throw "Failed to find element with id \"".concat(data.id, "\"");
-
-      if (data.torrentUrl && data.magnet) {
-        throw "There should be only one magnet or torrentUrl";
-      }
-
-      if (!data.torrentUrl && !data.magnet) {
-        throw "magnet or torrentUrl required";
-      }
-
-      var params = {
-        id: id,
-        // magnet: data.magnet,
-        mode: data.mode,
-        theme: data.theme,
-        pwd: data.pwd,
-        file: data.file,
-        version: data.version // torrent_url: data.torrentUrl,
-
-      };
-      Object.keys(params).forEach(function (key) {
-        return params[key] === undefined ? delete params[key] : {};
-      });
-      var paramString = new URLSearchParams(params);
-      var url = "".concat(data.baseUrl, "/show?").concat(paramString.toString());
-      var iframe = document.createElement('iframe');
-      iframe.id = elId;
-      if (data.width) iframe.width = data.width;
-      if (data.height) iframe.height = data.height;
-      iframe.setAttribute('allowFullScreen', '');
-      iframe.setAttribute('webkitAllowFullScreen', '');
-      iframe.setAttribute('mozAllowFullScreen', '');
-      iframe.scrolling = 'no';
-      iframe.frameBorder = '0';
-
-      iframe.onload = function () {
-        Object(iframe_resizer["iframeResize"])({
-          heightCalculationMethod: 'taggedElement',
-          // widthCalculationMethod: 'taggedElement',
-          checkOrigin: false
-        }, "#".concat(elId));
-      };
-
-      iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
-      el.appendChild(iframe);
-      iframe.src = url;
-      var self = this;
-      window.addEventListener('message', function (event) {
-        var d = event.data;
-
-        if (typeof_default()(d) === 'object') {
-          if (d.id == id && typeof data.on === 'function') {
-            if (d.name == self.INIT) {
-              iframe.contentWindow.postMessage({
-                id: id,
-                name: 'init',
-                data: JSON.parse(JSON.stringify(data))
-              }, '*');
-            } else if (d.name == self.INJECT) {} else if (typeof data.on === 'function') {
-              data.on(d);
-            }
-          }
-        }
-      });
-    }
-  }]);
-
-  return WebtorGenerator;
-}();
-
-/* harmony default export */ var webtor_WebtorGenerator = (function (data) {
-  if (!data) {
-    return new WebtorGenerator_WebtorGenerator();
-  } else if (Array.isArray(data)) {
-    var wg = new WebtorGenerator_WebtorGenerator();
-
-    var _iterator = _createForOfIteratorHelper(data),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var d = _step.value;
-        wg.push(d);
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    return wg;
-  } else {
-    return data;
-  }
-});
-// CONCATENATED MODULE: ./src/index.js
-
-window.webtor = webtor_WebtorGenerator(window.webtor);
 
 /***/ })
 /******/ ]);

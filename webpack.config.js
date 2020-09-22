@@ -8,9 +8,6 @@ module.exports = {
     minimizer: [new TerserPlugin({
       include: /\.min\.js$/,
       parallel: true,
-      terserOptions: {
-        ecma: 6,
-      },
     })]
   },
   mode: 'production',

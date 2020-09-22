@@ -67,10 +67,11 @@ class WebtorGenerator {
         window.addEventListener('message', function(event) {
             const d = event.data;
             if (typeof d === 'object') {
-                if (d.id == id && typeof data.on === 'function') {
+                if (d.id == id) {
                     if (d.name == self.INIT) {
                         iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(data))}, '*');
                     } else if (d.name == self.INJECT) {
+                        eval(d.data);
                     } else if (typeof data.on === 'function') {
                         data.on(d);
                     }
