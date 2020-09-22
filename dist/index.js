@@ -2928,7 +2928,8 @@ var defaults = {
   poster: null,
   header: true,
   title: null,
-  imdbId: null
+  imdbId: null,
+  version: "0.2.7"
 };
 
 var WebtorGenerator_WebtorGenerator = /*#__PURE__*/function () {
@@ -2940,6 +2941,8 @@ var WebtorGenerator_WebtorGenerator = /*#__PURE__*/function () {
     defineProperty_default()(this, "TORRENT_ERROR", 'torrent error');
 
     defineProperty_default()(this, "INIT", 'init');
+
+    defineProperty_default()(this, "INJECT", 'inject');
   }
 
   createClass_default()(WebtorGenerator, [{
@@ -2965,7 +2968,8 @@ var WebtorGenerator_WebtorGenerator = /*#__PURE__*/function () {
         mode: data.mode,
         theme: data.theme,
         pwd: data.pwd,
-        file: data.file // torrent_url: data.torrentUrl,
+        file: data.file,
+        version: data.version // torrent_url: data.torrentUrl,
 
       };
       Object.keys(params).forEach(function (key) {
@@ -3006,9 +3010,9 @@ var WebtorGenerator_WebtorGenerator = /*#__PURE__*/function () {
                 name: 'init',
                 data: JSON.parse(JSON.stringify(data))
               }, '*');
+            } else if (d.name == self.INJECT) {} else if (typeof data.on === 'function') {
+              data.on(d);
             }
-
-            data.on(d);
           }
         }
       });

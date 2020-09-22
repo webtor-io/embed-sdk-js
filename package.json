@@ -1,6 +1,6 @@
 {
   "name": "@webtor/player-sdk-js",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Player SDK for online torrent streaming",
   "main": "src/index.js",
   "repository": {
@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "example": "http-server"
   },
   "files": [
     "dist/"
@@ -31,6 +32,7 @@
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/preset-env": "^7.7.7",
     "babel-loader": "^8.0.6",
+    "http-server": "^0.12.3",
     "terser-webpack-plugin": "^2.3.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"

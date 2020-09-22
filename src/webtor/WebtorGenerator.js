@@ -11,11 +11,13 @@ const defaults = {
     header:     true,
     title:      null,
     imdbId:     null,
+    version:    VERSION,
 };
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
-    TORRENT_ERROR = 'torrent error';
-    INIT = 'init';
+    TORRENT_ERROR   = 'torrent error';
+    INIT            = 'init';
+    INJECT          = 'inject';
 
     push(data) {
         const id = uuid();
@@ -32,10 +34,11 @@ class WebtorGenerator {
         const params = {
             id,
             // magnet: data.magnet,
-            mode:  data.mode,
-            theme: data.theme,
-            pwd:   data.pwd,
-            file:  data.file,
+            mode:    data.mode,
+            theme:   data.theme,
+            pwd:     data.pwd,
+            file:    data.file,
+            version: data.version,
             // torrent_url: data.torrentUrl,
         };
         Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
@@ -67,8 +70,10 @@ class WebtorGenerator {
                 if (d.id == id && typeof data.on === 'function') {
                     if (d.name == self.INIT) {
                         iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(data))}, '*');
+                    } else if (d.name == self.INJECT) {
+                    } else if (typeof data.on === 'function') {
+                        data.on(d);
                     }
-                    data.on(d);
                 }
             }
         });

@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
@@ -36,4 +37,9 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(require('./package.json').version),
+    }),
+  ],
 };
