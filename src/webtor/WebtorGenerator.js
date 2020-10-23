@@ -13,6 +13,7 @@ const defaults = {
     imdbId:     null,
     version:    VERSION,
 };
+let injected = false;
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
     TORRENT_ERROR   = 'torrent error';
@@ -22,32 +23,30 @@ class WebtorGenerator {
     push(data) {
         const id = uuid();
         const elId = `webtor-${id}`;
-        data = Object.assign(defaults, data);
-        const el = document.getElementById(data.id);
-        if (!el) throw `Failed to find element with id "${data.id}"`;
-        if (data.torrentUrl && data.magnet) {
+        const dd = Object.assign({}, defaults, data);
+        const el = document.getElementById(dd.id);
+        if (!el) throw `Failed to find element with id "${dd.id}"`;
+        if (dd.torrentUrl && dd.magnet) {
             throw `There should be only one magnet or torrentUrl`;
         }
-        if (!data.torrentUrl && !data.magnet) {
+        if (!dd.torrentUrl && !dd.magnet) {
             throw `magnet or torrentUrl required`;
         }
         const params = {
             id,
-            // magnet: data.magnet,
-            mode:    data.mode,
-            theme:   data.theme,
-            pwd:     data.pwd,
-            file:    data.file,
-            version: data.version,
-            // torrent_url: data.torrentUrl,
+            mode:    dd.mode,
+            theme:   dd.theme,
+            pwd:     dd.pwd,
+            file:    dd.file,
+            version: dd.version,
         };
         Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
         const paramString = new URLSearchParams(params)
-        const url = `${data.baseUrl}/show?${paramString.toString()}`;
+        const url = `${dd.baseUrl}/show?${paramString.toString()}`;
         const iframe = document.createElement('iframe');
         iframe.id = elId;
-        if (data.width)  iframe.width = data.width;
-        if (data.height) iframe.height = data.height;
+        if (dd.width)  iframe.width = dd.width;
+        if (dd.height) iframe.height = dd.height;
         iframe.setAttribute('allowFullScreen', '');
         iframe.setAttribute('webkitAllowFullScreen', '');
         iframe.setAttribute('mozAllowFullScreen', '');
@@ -69,11 +68,12 @@ class WebtorGenerator {
             if (typeof d === 'object') {
                 if (d.id == id) {
                     if (d.name == self.INIT) {
-                        iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(data))}, '*');
-                    } else if (d.name == self.INJECT) {
+                        iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(dd))}, '*');
+                    } else if (d.name == self.INJECT && !injected) {
+                        injected = true;
                         eval(d.data);
                     } else if (typeof data.on === 'function') {
-                        data.on(d);
+                        dd.on(d);
                     }
                 }
             }
