@@ -70,7 +70,7 @@ header     | Shows header with current progress and title (true/false, default: 
 pwd        | Selected directory in torrent (optional)
 file       | Selected file in torrent (optional)
 lang       | Override language (optional)
-i18n       | Override i18n messages
+i18n       | Override i18n messages (optional)
 
 ## Player events
 Name            | Description
