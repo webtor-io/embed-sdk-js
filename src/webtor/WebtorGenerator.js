@@ -12,6 +12,8 @@ const defaults = {
     title:      null,
     imdbId:     null,
     version:    VERSION,
+    lang:       null,
+    i18n:       {},
 };
 let injected = false;
 class WebtorGenerator {
@@ -39,6 +41,8 @@ class WebtorGenerator {
             pwd:     dd.pwd,
             file:    dd.file,
             version: dd.version,
+            lang:    dd.lang,
+            i18n:    dd.i18n,
         };
         Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
         const paramString = new URLSearchParams(params)

@@ -1,6 +1,6 @@
 {
   "name": "@webtor/player-sdk-js",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Player SDK for online torrent streaming",
   "main": "src/index.js",
   "browserslist": "> 2%, not dead",

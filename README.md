@@ -31,6 +31,20 @@ Player SDK for online torrent streaming on your site
                     src: 'https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt',
                 }
             ],
+            lang: 'en',
+            i18n: {
+                en: {
+                    common: {
+                        "loading torrent": "Magnetizing torrent-file...",
+                    },
+                    stat: {
+                        "seeding": "Seeding",
+                        "waiting": "Client initialization",
+                        "waiting for peers": "Waiting for peers",
+                        "from": "from",
+                    },
+                },
+            },
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8"></script>
@@ -55,6 +69,8 @@ imdbId     | Helps to find subtitles and additional metadata (optional)
 header     | Shows header with current progress and title (true/false, default: true)
 pwd        | Selected directory in torrent (optional)
 file       | Selected file in torrent (optional)
+lang       | Override language (optional)
+i18n       | Override i18n messages
 
 ## Player events
 Name            | Description

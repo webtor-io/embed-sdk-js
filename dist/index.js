@@ -129,7 +129,9 @@ const defaults = {
   header: true,
   title: null,
   imdbId: null,
-  version: "0.2.9"
+  version: "0.2.10",
+  lang: null,
+  i18n: {}
 };
 let injected = false;
 
@@ -165,7 +167,9 @@ class WebtorGenerator {
       theme: dd.theme,
       pwd: dd.pwd,
       file: dd.file,
-      version: dd.version
+      version: dd.version,
+      lang: dd.lang,
+      i18n: dd.i18n
     };
     Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
     const paramString = new URLSearchParams(params);
