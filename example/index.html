@@ -3,6 +3,18 @@
 
 <head>
     <title>Webtor Player SDK Example</title>
+    <style>
+        body, #player {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        #player {
+            height: 100vh;
+        }
+    </style>
 </head>
 
 <body>
@@ -12,7 +24,10 @@
         window.webtor.push({
             id: 'player',
             baseUrl: 'https://webtor.io',
+            // baseUrl: 'http://localhost:4000',
             magnet: 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F',
+            width: '100%',
+            height: '100%',
             on: function(e) {
                 if (e.name == window.webtor.TORRENT_FETCHED) {
                     console.log('Torrent fetched!')

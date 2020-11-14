@@ -56,14 +56,15 @@ class WebtorGenerator {
         iframe.setAttribute('mozAllowFullScreen', '');
         iframe.scrolling = 'no';
         iframe.frameBorder = '0';
-        iframe.onload = () => {
-            iframeResize({
-                heightCalculationMethod: 'taggedElement',
-                // widthCalculationMethod: 'taggedElement',
-                checkOrigin: false,
-            }, `#${elId}`);
+        if (!dd.height) {
+            iframe.onload = () => {
+                iframeResize({
+                    heightCalculationMethod: 'taggedElement',
+                    checkOrigin: false,
+                }, `#${elId}`);
+            }
         }
-        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; fullscreen; picture-in-picture';
         el.appendChild(iframe);
         iframe.src = url;
         const self = this;
