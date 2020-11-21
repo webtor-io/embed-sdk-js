@@ -129,11 +129,41 @@ const defaults = {
   header: true,
   title: null,
   imdbId: null,
-  version: "0.2.11",
+  version: "0.2.12",
   lang: null,
-  i18n: {}
+  i18n: {},
+  features: {}
 };
 let injected = false;
+
+class Player {
+  constructor(send) {
+    this.send = send;
+  }
+
+  play() {
+    this.send('play');
+  }
+
+  pause() {
+    this.send('pause');
+  }
+
+  setPosition(val) {
+    this.send('setPosition', val);
+  }
+
+  open(val) {
+    var chunks = val.replace(/^\//, '').split('/');
+    var file = chunks.pop();
+    var pwd = '/' + chunks.join('/');
+    this.send('open', {
+      file: file,
+      pwd: pwd
+    });
+  }
+
+}
 
 class WebtorGenerator {
   constructor() {
@@ -143,7 +173,19 @@ class WebtorGenerator {
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "INIT", 'init');
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "OPEN", 'open');
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "INJECT", 'inject');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "INITED", 'inited');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "PLAYER_STATUS", 'player status');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "CURRENT_TIME", 'current time');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "DURATION", 'duration');
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(this, "OPEN_SUBTITLES", 'open subtitles');
   }
 
   push(data) {
@@ -169,7 +211,8 @@ class WebtorGenerator {
       file: dd.file,
       version: dd.version,
       lang: dd.lang,
-      i18n: dd.i18n
+      i18n: dd.i18n,
+      features: dd.features
     };
     Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
     const paramString = new URLSearchParams(params);
@@ -197,11 +240,20 @@ class WebtorGenerator {
     el.appendChild(iframe);
     iframe.src = url;
     const self = this;
+    const player = new Player((name, data) => {
+      iframe.contentWindow.postMessage({
+        id,
+        name,
+        data
+      }, '*');
+    });
     window.addEventListener('message', function (event) {
       const d = event.data;
 
       if (typeof d === 'object') {
         if (d.id == id) {
+          d.player = player;
+
           if (d.name == self.INIT) {
             iframe.contentWindow.postMessage({
               id,

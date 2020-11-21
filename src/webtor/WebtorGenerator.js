@@ -14,13 +14,43 @@ const defaults = {
     version:    VERSION,
     lang:       null,
     i18n:       {},
+    features:   {},
 };
 let injected = false;
+class Player {
+    constructor(send) {
+        this.send = send;
+    }
+    play() {
+        this.send('play');
+    }
+    pause() {
+        this.send('pause');
+    }
+    setPosition(val) {
+        this.send('setPosition', val);
+    }
+    open(val) {
+        var chunks = val.replace(/^\//, '').split('/'); 
+        var file = chunks.pop();
+        var pwd = '/' + chunks.join('/');
+        this.send('open', {
+            file: file,
+            pwd: pwd,
+        });
+    }
+}
 class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
     TORRENT_ERROR   = 'torrent error';
     INIT            = 'init';
+    OPEN            = 'open';
     INJECT          = 'inject';
+    INITED          = 'inited';
+    PLAYER_STATUS   = 'player status';
+    CURRENT_TIME    = 'current time';
+    DURATION        = 'duration';
+    OPEN_SUBTITLES  = 'open subtitles';
 
     push(data) {
         const id = uuid();
@@ -36,13 +66,14 @@ class WebtorGenerator {
         }
         const params = {
             id,
-            mode:    dd.mode,
-            theme:   dd.theme,
-            pwd:     dd.pwd,
-            file:    dd.file,
-            version: dd.version,
-            lang:    dd.lang,
-            i18n:    dd.i18n,
+            mode:     dd.mode,
+            theme:    dd.theme,
+            pwd:      dd.pwd,
+            file:     dd.file,
+            version:  dd.version,
+            lang:     dd.lang,
+            i18n:     dd.i18n,
+            features: dd.features,
         };
         Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
         const paramString = new URLSearchParams(params)
@@ -68,10 +99,14 @@ class WebtorGenerator {
         el.appendChild(iframe);
         iframe.src = url;
         const self = this;
+        const player = new Player((name, data) => {
+            iframe.contentWindow.postMessage({id, name, data}, '*');
+        });
         window.addEventListener('message', function(event) {
             const d = event.data;
             if (typeof d === 'object') {
                 if (d.id == id) {
+                    d.player = player;
                     if (d.name == self.INIT) {
                         iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(dd))}, '*');
                     } else if (d.name == self.INJECT && !injected) {
