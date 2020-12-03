@@ -87,6 +87,8 @@ timeline    | enables timeline control
 duration    | displays total duration
 volume      | enables volume control
 chromecast  | enables chromecast support
+browse      | enables file browser menu
+download    | enables download button
 
 Defaults:
 ```
@@ -103,6 +105,8 @@ features: {
     duration:    true,
     volume:      true,
     chromecast:  true,
+    browse:      true,
+    download:    true,
 }
 ```
 
