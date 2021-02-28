@@ -88,6 +88,7 @@ Name        | Description
 title       | displays movie title
 p2pProgress | displays p2p progress
 subtitles   | enables subtitles control
+captions    | enables showing captions for subtitles
 settings    | enables settings control (cog)
 fullscreen  | enables fullscreen control
 playpause   | enables plays/pause control
@@ -106,6 +107,7 @@ features: {
     title:       true,
     settings:    true,
     fullscreen:  true,
+    captions:    true,
     subtitles:   true,
     continue:    true,
     playpause:   true,
