@@ -16,13 +16,13 @@ Video element is replaced by wrapper div in this scenario.
 ## Element attributes
 Attribute    | Description
 -------------|-------------
-id           | id of wrapper div
-class        | class of wrapper div
+id           | ID of wrapper div
+class        | Class of wrapper div
 width        | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default)  
 height       | Height of an iframe (might be any css width value: 800px, 100%, etc... optional)
-src          | magnet url or url to torrent file (required)
-data-config  | additional player configuration in JSON (see [Player configuration](#player-configuration))
-data-torrent | in case if torrent url has no '.torrent' extension just use this attribute
+src          | Magnet URI or url of torrent file (required)
+data-config  | Additional player configuration in JSON (see [Player configuration](#player-configuration))
+data-torrent | In case if torrent url has no '.torrent' extension just use this attribute
 
 ## Advanced usage
 ```html
