@@ -29,6 +29,7 @@ Player SDK for online torrent streaming on your site
                     srclang: 'en',
                     label: 'test',
                     src: 'https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt',
+                    autoselect: true,
                 }
             ],
             lang: 'en',
@@ -63,9 +64,9 @@ torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Acces
 theme      | Can be "light" or "dark". If not set theme will be selected automatically (optional)
 poster     | Url to the poster image (optional)
 on         | Callback-function to capture player events (optional)
-subtitles  | Array of subtitles. Every subtitle **MUST** include `srclang`, `label`, `src` (optional)
+subtitles  | Array of subtitles (optional, see [Subtitle configuration](#subtitle-configuration) for more details)
 title      | Replaces original file name in a header with specific title (optional)
-imdbId     | Helps to find subtitles and additional metadata (example value '0133093', optional)
+imdbId     | Helps to find subtitles and additional metadata (example values 'tt0133093' or '0133093' or even '133093', optional)
 header     | Shows header with current progress and title (true/false, default: true)
 pwd        | Selected directory in torrent (optional)
 file       | Selected file in torrent (optional)
@@ -73,12 +74,21 @@ lang       | Override language (optional)
 i18n       | Override i18n messages (optional)
 features   | enables or disables specific player features (optional)
 
+## Subtitle configuration
+Attribute  | Description
+-----------|-------------
+srclang    | Two-letter language code
+label      | Subtitle label
+src        | `url` to the subtitle src, could be `vtt`, `srt` and `m3u8`. It should be direct link to subtitle.
+autoselect | If true this track will be selected by default (true/false, optional)
+
 ## Player features
 Name        | Description
 ------------|-------------
 title       | displays movie title
 p2pProgress | displays p2p progress
 subtitles   | enables subtitles control
+captions    | enables showing captions for subtitles
 settings    | enables settings control (cog)
 fullscreen  | enables fullscreen control
 playpause   | enables plays/pause control
@@ -87,6 +97,8 @@ timeline    | enables timeline control
 duration    | displays total duration
 volume      | enables volume control
 chromecast  | enables chromecast support
+browse      | enables file browser menu
+download    | enables download button
 
 Defaults:
 ```
@@ -95,6 +107,7 @@ features: {
     title:       true,
     settings:    true,
     fullscreen:  true,
+    captions:    true,
     subtitles:   true,
     continue:    true,
     playpause:   true,
@@ -103,6 +116,8 @@ features: {
     duration:    true,
     volume:      true,
     chromecast:  true,
+    browse:      true,
+    download:    true,
 }
 ```
 
