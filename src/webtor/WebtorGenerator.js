@@ -56,8 +56,13 @@ class WebtorGenerator {
         const id = uuid();
         const elId = `webtor-${id}`;
         const dd = Object.assign({}, defaults, data);
-        const el = document.getElementById(dd.id);
-        if (!el) throw `Failed to find element with id "${dd.id}"`;
+        let el = null;
+        if (dd.el) {
+            el = dd.el;
+        } else {
+            el = document.getElementById(dd.id);
+            if (!el) throw `Failed to find element with id "${dd.id}"`;
+        }
         if (dd.torrentUrl && dd.magnet) {
             throw `There should be only one magnet or torrentUrl`;
         }

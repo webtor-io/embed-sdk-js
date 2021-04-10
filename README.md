@@ -9,6 +9,25 @@ Player SDK for online torrent streaming on your site
 ## Basic usage
 ```html
 ...
+    <video class="webtor" id="video" src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-config='{"title": "Sintel"}' />
+    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+```
+Video element is replaced by wrapper div in this scenario.
+
+## Element attributes
+Attribute    | Description
+-------------|-------------
+id           | id of wrapper div
+class        | class of wrapper div
+width        | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default)  
+height       | Height of an iframe (might be any css width value: 800px, 100%, etc... optional)
+src          | magnet url or url to torrent file (required)
+data-config  | additional player configuration in JSON (see [Player configuration](#player-configuration))
+data-torrent | in case if torrent url has no '.torrent' extension just use this attribute
+
+## Advanced usage
+```html
+...
     <div id="player" class="webtor" />
     <script>
         window.webtor = window.webtor || [];
@@ -48,7 +67,7 @@ Player SDK for online torrent streaming on your site
             },
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ...
 ```
 [Here is live example](https://webtor.io/sdk-example.html)
