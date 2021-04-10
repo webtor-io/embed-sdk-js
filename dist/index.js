@@ -129,7 +129,7 @@ const defaults = {
   header: true,
   title: null,
   imdbId: null,
-  version: "0.2.12",
+  version: "0.2.13",
   lang: null,
   i18n: {},
   features: {}
@@ -205,16 +205,8 @@ class WebtorGenerator {
 
     const params = {
       id,
-      mode: dd.mode,
-      theme: dd.theme,
-      pwd: dd.pwd,
-      file: dd.file,
-      version: dd.version,
-      lang: dd.lang,
-      i18n: dd.i18n,
-      features: dd.features
+      mode: dd.mode
     };
-    Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
     const paramString = new URLSearchParams(params);
     const url = `${dd.baseUrl}/show?${paramString.toString()}`;
     const iframe = document.createElement('iframe');
