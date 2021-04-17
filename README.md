@@ -9,21 +9,30 @@ Player SDK for online torrent streaming on your site
 ## Basic usage
 ```html
 ...
-    <video class="webtor" id="video" src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-config='{"title": "Sintel"}' />
+    <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-title="Sintel"></video>
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
-Video element is replaced by wrapper div in this scenario.
+with subtitle tracks and poster:
+```html
+    <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
+        <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
+    </video>
+    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+...
+Video element is replaced by wrapper div in this scenarios.
 
 ## Element attributes
 Attribute    | Description
 -------------|-------------
-id           | id of wrapper div
-class        | class of wrapper div
-width        | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default)  
+id           | ID of wrapper div
+class        | Class of wrapper div
+width        | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default)
 height       | Height of an iframe (might be any css width value: 800px, 100%, etc... optional)
-src          | magnet url or url to torrent file (required)
-data-config  | additional player configuration in JSON (see [Player configuration](#player-configuration))
-data-torrent | in case if torrent url has no '.torrent' extension just use this attribute
+src          | Magnet url or url to torrent file (required)
+poster       | Url to the poster image (optional)
+type         | Use `application/x-bittorrent` for torrent file url in case if it has no `.torrent` extension
+data-config  | Additional player configuration in JSON (see [Player configuration](#player-configuration))
+data-*       | Set specific configuration value for a key (see [Player configuration](#player-configuration))
 
 ## Advanced usage
 ```html
@@ -42,13 +51,13 @@ data-torrent | in case if torrent url has no '.torrent' extension just use this 
                     console.log('Torrent error!');
                 }
             },
-            poster: 'https://via.placeholder.com/150/0000FF/808080?Text=Sintel',
+            poster: 'https://via.placeholder.com/150/0000FF/808080',
             subtitles: [
                 {
                     srclang: 'en',
                     label: 'test',
                     src: 'https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt',
-                    autoselect: true,
+                    default: true,
                 }
             ],
             lang: 'en',
@@ -76,7 +85,7 @@ data-torrent | in case if torrent url has no '.torrent' extension just use this 
 Attribute  | Description
 -----------|-------------
 id         | Element id where player will be embedded
-magnet     | Magnet-uri (torrentUrl ot magnet is required)
+magnet     | Magnet URI (torrentUrl ot magnet is required)
 width      | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default)  
 height     | Height of an iframe (might be any css width value: 800px, 100%, etc... optional)
 torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side)
@@ -99,11 +108,12 @@ Attribute  | Description
 srclang    | Two-letter language code
 label      | Subtitle label
 src        | `url` to the subtitle src, could be `vtt`, `srt` and `m3u8`. It should be direct link to subtitle.
-autoselect | If true this track will be selected by default (true/false, optional)
+default    | If true this track will be selected by default (true/false, optional)
 
 ## Player features
 Name        | Description
 ------------|-------------
+controls    | enables all features by default 
 title       | displays movie title
 p2pProgress | displays p2p progress
 subtitles   | enables subtitles control
@@ -118,27 +128,6 @@ volume      | enables volume control
 chromecast  | enables chromecast support
 browse      | enables file browser menu
 download    | enables download button
-
-Defaults:
-```
-features: {
-    p2pProgress: true,
-    title:       true,
-    settings:    true,
-    fullscreen:  true,
-    captions:    true,
-    subtitles:   true,
-    continue:    true,
-    playpause:   true,
-    currentTime: true,
-    timeline:    true,
-    duration:    true,
-    volume:      true,
-    chromecast:  true,
-    browse:      true,
-    download:    true,
-}
-```
 
 ## Player events
 

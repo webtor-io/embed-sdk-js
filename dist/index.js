@@ -129,12 +129,22 @@ const defaults = {
   header: true,
   title: null,
   imdbId: null,
-  version: "0.2.14",
+  version: "0.2.15",
   lang: null,
   i18n: {},
   features: {}
 };
 let injected = false;
+
+function parsePath(path) {
+  const chunks = path.replace(/^\//, '').split('/');
+  const file = chunks.pop();
+  const pwd = '/' + chunks.join('/');
+  return {
+    pwd,
+    file
+  };
+}
 
 class Player {
   constructor(send) {
@@ -154,13 +164,7 @@ class Player {
   }
 
   open(val) {
-    var chunks = val.replace(/^\//, '').split('/');
-    var file = chunks.pop();
-    var pwd = '/' + chunks.join('/');
-    this.send('open', {
-      file: file,
-      pwd: pwd
-    });
+    this.send('open', parsePath(val));
   }
 
 }
@@ -191,7 +195,12 @@ class WebtorGenerator {
   push(data) {
     const id = Object(_uuid__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])();
     const elId = `webtor-${id}`;
-    const dd = Object.assign({}, defaults, data);
+    let dd = Object.assign({}, defaults, data);
+
+    if (dd.path) {
+      dd = Object.assign({}, dd, parsePath(dd.path));
+    }
+
     let el = null;
 
     if (dd.el) {
@@ -337,7 +346,7 @@ for (const v of document.querySelectorAll('video')) {
     magnet = src;
   }
 
-  if (src && src.match('\.torrent$')) {
+  if (src && src.match('\.torrent$') || src && v.getAttribute('type') == 'application/x-bittorrent') {
     torrentUrl = src;
   }
 
@@ -348,6 +357,40 @@ for (const v of document.querySelectorAll('video')) {
   const parent = v.parentNode;
   const width = v.getAttribute('width');
   const height = v.getAttribute('height');
+  const poster = v.getAttribute('poster');
+  const controls = v.getAttribute('controls') == '' || v.getAttribute('controls') == 'true';
+  const attrData = {};
+
+  for (const a of v.attributes) {
+    if (a.name == 'data-config') continue;
+
+    if (a.name.startsWith('data-')) {
+      let val = a.value;
+
+      try {
+        val = JSON.parse(a.value);
+      } catch (e) {// console.log(e);
+      }
+
+      attrData[a.name.replace('data-', '')] = val;
+    }
+  }
+
+  const tracks = [];
+
+  for (const t of v.querySelectorAll('track')) {
+    tracks.push(clean({
+      srclang: t.getAttribute('srclang'),
+      label: t.getAttribute('label'),
+      default: t.getAttribute('default'),
+      src: t.getAttribute('src')
+    }));
+  }
+
+  if (tracks.length > 0) {
+    attrData.subtitles = tracks;
+  }
+
   let config = v.getAttribute('data-config');
 
   if (config == null) {
@@ -364,9 +407,11 @@ for (const v of document.querySelectorAll('video')) {
     magnet,
     torrentUrl,
     width,
-    height
+    height,
+    poster,
+    controls
   };
-  data = Object.assign({}, data, config);
+  data = Object.assign({}, data, attrData, config);
   parent.replaceChild(div, v);
   window.webtor.push(clean(data));
 }

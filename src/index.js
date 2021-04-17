@@ -15,7 +15,7 @@ for (const v of document.querySelectorAll('video')) {
     if (src && src.match('^magnet:.*')) {
         magnet = src;
     }
-    if (src && src.match('\.torrent$')) {
+    if ((src && src.match('\.torrent$')) || (src && v.getAttribute('type') == 'application/x-bittorrent')) {
         torrentUrl = src;
     }
     if (v.getAttribute('data-torrent')) {
@@ -24,6 +24,34 @@ for (const v of document.querySelectorAll('video')) {
     const parent = v.parentNode;
     const width = v.getAttribute('width');
     const height = v.getAttribute('height');
+    const poster = v.getAttribute('poster');
+    const controls = v.getAttribute('controls') == '' || v.getAttribute('controls') == 'true';
+    const attrData = {};
+    for (const a of v.attributes) {
+        if (a.name == 'data-config') continue;
+        if (a.name.startsWith('data-')) {
+            let val = a.value;
+            try {
+                val = JSON.parse(a.value);
+            } catch (e) {
+                // console.log(e);
+            }
+            attrData[a.name.replace('data-', '')] = val;
+        }
+    }
+
+    const tracks = [];
+    for (const t of v.querySelectorAll('track')) {
+        tracks.push(clean({
+            srclang: t.getAttribute('srclang'),
+            label:   t.getAttribute('label'),
+            default: t.getAttribute('default'),
+            src:     t.getAttribute('src'),
+        }));
+    }
+    if (tracks.length > 0) {
+        attrData.subtitles = tracks;
+    }
     let config = v.getAttribute('data-config');
     if (config == null) {
         config = {};
@@ -39,8 +67,10 @@ for (const v of document.querySelectorAll('video')) {
         torrentUrl,
         width,
         height,
+        poster,
+        controls,
     };
-    data = Object.assign({}, data, config);
+    data = Object.assign({}, data, attrData, config);
     parent.replaceChild(div, v);
     window.webtor.push(clean(data));
 }

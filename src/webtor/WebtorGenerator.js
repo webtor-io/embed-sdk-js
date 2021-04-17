@@ -17,6 +17,12 @@ const defaults = {
     features:   {},
 };
 let injected = false;
+function parsePath(path) {
+    const chunks = path.replace(/^\//, '').split('/');
+    const file = chunks.pop();
+    const pwd = '/' + chunks.join('/');
+    return {pwd, file};
+}
 class Player {
     constructor(send) {
         this.send = send;
@@ -31,13 +37,7 @@ class Player {
         this.send('setPosition', val);
     }
     open(val) {
-        var chunks = val.replace(/^\//, '').split('/'); 
-        var file = chunks.pop();
-        var pwd = '/' + chunks.join('/');
-        this.send('open', {
-            file: file,
-            pwd: pwd,
-        });
+        this.send('open', parsePath(val));
     }
 }
 class WebtorGenerator {
@@ -55,7 +55,10 @@ class WebtorGenerator {
     push(data) {
         const id = uuid();
         const elId = `webtor-${id}`;
-        const dd = Object.assign({}, defaults, data);
+        let dd = Object.assign({}, defaults, data);
+        if (dd.path) {
+            dd = Object.assign({}, dd, parsePath(dd.path));
+        }
         let el = null;
         if (dd.el) {
             el = dd.el;
