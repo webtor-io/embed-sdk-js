@@ -8,7 +8,6 @@ Player SDK for online torrent streaming on your site
 
 ## Basic usage
 ```html
-...
     <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-title="Sintel"></video>
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
@@ -18,7 +17,7 @@ with subtitle tracks and poster:
         <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
     </video>
     <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
-...
+```
 Video element is replaced by wrapper div in this scenarios.
 
 ## Element attributes
