@@ -127,7 +127,7 @@ volume      | enables volume control
 chromecast  | enables chromecast support
 browse      | enables file browser menu
 download    | enables download button
-embed.      | enables embed button
+embed       | enables embed button
 
 ## Player events
 
