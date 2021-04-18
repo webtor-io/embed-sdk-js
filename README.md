@@ -8,15 +8,15 @@ Player SDK for online torrent streaming on your site
 
 ## Basic usage
 ```html
-    <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-title="Sintel"></video>
-    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+<video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-title="Sintel"></video>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
 with subtitle tracks and poster:
 ```html
-    <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
-        <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
-    </video>
-    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+<video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
+    <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
+</video>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
 Video element is replaced by wrapper div in this scenarios.
 
@@ -30,6 +30,7 @@ height       | Height of an iframe (might be any css width value: 800px, 100%, e
 src          | Magnet url or url to torrent file (required)
 poster       | Url to the poster image (optional)
 type         | Use `application/x-bittorrent` for torrent file url in case if it has no `.torrent` extension
+controls     | Enables all player features
 data-config  | Additional player configuration in JSON (see [Player configuration](#player-configuration))
 data-*       | Set specific configuration value for a key (see [Player configuration](#player-configuration))
 
@@ -98,7 +99,8 @@ pwd        | Selected directory in torrent (optional)
 file       | Selected file in torrent (optional)
 lang       | Override language (optional)
 i18n       | Override i18n messages (optional)
-features   | enables or disables specific player features (optional)
+controls   | Enables all features (true/false, default: true)
+features   | Enables or disables specific player features (optional)
 
 ## Subtitle configuration
 Attribute  | Description
@@ -111,7 +113,6 @@ default    | If true this track will be selected by default (true/false, optiona
 ## Player features
 Name        | Description
 ------------|-------------
-controls    | enables all features by default 
 title       | displays movie title
 p2pProgress | displays p2p progress
 subtitles   | enables subtitles control
@@ -126,6 +127,7 @@ volume      | enables volume control
 chromecast  | enables chromecast support
 browse      | enables file browser menu
 download    | enables download button
+embed.      | enables embed button
 
 ## Player events
 
