@@ -1,12 +1,12 @@
 {
-  "name": "@webtor/player-sdk-js",
+  "name": "@webtor/embed-sdk-js",
   "version": "0.2.15",
-  "description": "Player SDK for online torrent streaming",
+  "description": "Embed SDK for online torrent streaming and downloading",
   "main": "src/index.js",
   "browserslist": "> 2%, not dead",
   "repository": {
     "type": "git",
-    "url": "https://github.com/webtor-io/player-sdk-js"
+    "url": "https://github.com/webtor-io/embed-sdk-js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
