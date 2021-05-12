@@ -1,5 +1,5 @@
 # embed-sdk-js
-Player SDK for online torrent streaming on your site
+Embed SDK for online torrent streaming and downloading on your site
 
 ## Features
 * Supports magnet-uri and external torrent-files
