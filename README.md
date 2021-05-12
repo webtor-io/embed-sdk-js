@@ -1,4 +1,4 @@
-# player-sdk-js
+# embed-sdk-js
 Player SDK for online torrent streaming on your site
 
 ## Features
