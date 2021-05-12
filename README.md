@@ -1,4 +1,4 @@
-# player-sdk-js
+# embed-sdk-js
 Player SDK for online torrent streaming on your site
 
 ## Features
@@ -8,15 +8,15 @@ Player SDK for online torrent streaming on your site
 
 ## Basic usage
 ```html
-    <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" width="100%" data-title="Sintel"></video>
-    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+<video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel"></video>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
-with subtitle tracks and poster:
+with subtitle tracks, poster, custom title and width:
 ```html
-    <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
-        <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
-    </video>
-    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+<video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
+    <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
+</video>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
 Video element is replaced by wrapper div in this scenarios.
 
@@ -30,6 +30,7 @@ height       | Height of an iframe (might be any css width value: 800px, 100%, e
 src          | Magnet url or url to torrent file (required)
 poster       | Url to the poster image (optional)
 type         | Use `application/x-bittorrent` for torrent file url in case if it has no `.torrent` extension
+controls     | Enables all player features
 data-config  | Additional player configuration in JSON (see [Player configuration](#player-configuration))
 data-*       | Set specific configuration value for a key (see [Player configuration](#player-configuration))
 
@@ -95,10 +96,12 @@ title      | Replaces original file name in a header with specific title (option
 imdbId     | Helps to find subtitles and additional metadata (example values 'tt0133093' or '0133093' or even '133093', optional)
 header     | Shows header with current progress and title (true/false, default: true)
 pwd        | Selected directory in torrent (optional)
-file       | Selected file in torrent (optional)
+file       | Selected file in torrent in selected directory (optional, by default selects first video file)
+path       | Selected file by full file path in torrent, can be used instead of `pwd` and `file` (optional)
 lang       | Override language (optional)
 i18n       | Override i18n messages (optional)
-features   | enables or disables specific player features (optional)
+controls   | Enables all features (true/false, default: true)
+features   | Enables or disables specific player features (optional)
 
 ## Subtitle configuration
 Attribute  | Description
@@ -111,21 +114,21 @@ default    | If true this track will be selected by default (true/false, optiona
 ## Player features
 Name        | Description
 ------------|-------------
-controls    | enables all features by default 
-title       | displays movie title
-p2pProgress | displays p2p progress
-subtitles   | enables subtitles control
-captions    | enables showing captions for subtitles
-settings    | enables settings control (cog)
-fullscreen  | enables fullscreen control
-playpause   | enables plays/pause control
-currentTime | displays current time
-timeline    | enables timeline control
-duration    | displays total duration
-volume      | enables volume control
-chromecast  | enables chromecast support
-browse      | enables file browser menu
-download    | enables download button
+title       | Displays movie title
+p2pProgress | Displays p2p progress
+subtitles   | Enables subtitles control
+captions    | Enables showing captions for subtitles
+settings    | Enables settings control (cog)
+fullscreen  | Enables fullscreen control
+playpause   | Enables plays/pause control
+currentTime | Displays current time
+timeline    | Enables timeline control
+duration    | Displays total duration
+volume      | Enables volume control
+chromecast  | Enables chromecast support
+browse      | Enables file browser menu
+download    | Enables download button
+embed       | Enables embed button
 
 ## Player events
 
@@ -153,7 +156,7 @@ Player methods:
 
 Name        | Description
 ------------|-------------
-play        | starts playback (available only after first play-click in the player)
-pause       | pauses playback (available only after first play-click in the player)
-setPosition | sets player position in seconds (available only after first play-click in the player) 
-open        | opens another file in torrent, full file-path should be provided
+play        | Starts playback (available only after first play-click in the player)
+pause       | Pauses playback (available only after first play-click in the player)
+setPosition | Sets player position in seconds (available only after first play-click in the player) 
+open        | Opens another file in torrent, full file-path should be provided
