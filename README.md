@@ -1,5 +1,5 @@
 # embed-sdk-js
-Embed SDK for online torrent streaming and downloading on your site
+Webtor.io embed SDK for online torrent streaming and download on your site
 
 ## Features
 * Supports magnet-uri and external torrent-files
