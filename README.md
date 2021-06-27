@@ -1,26 +1,39 @@
 # embed-sdk-js
-Player SDK for online torrent streaming on your site
+
+Webtor SDK for online torrent streaming/downloading on your site
 
 ## Features
+
 * Supports magnet-uri and external torrent-files
 * Supports video (avi, mkv, mp4, m4v) with subtitles (vtt, srt)
+* Supports download torrent as zip-archive
 * No additional plugins/extensions required
 
 ## Basic usage
+
+Generates embed for video player:
 ```html
 <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel"></video>
-<script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
-with subtitle tracks, poster, custom title and width:
+
+Generates embed for video player with subtitle tracks, poster, custom title and width:
 ```html
 <video controls src="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" poster="https://via.placeholder.com/150/0000FF/808080" width="100%" data-title="Sintel">
     <track srclang="en" label="test" default src="https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt">
 </video>
-<script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
 Video element is replaced by wrapper div in this scenarios.
 
-## Element attributes
+Generate embed to download full torrent as zip-archive:
+```html
+<a href="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel" download>Please make sure that JavaScript is enabled</a>
+<script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+```
+
+## Video element attributes (streaming)
+
 Attribute    | Description
 -------------|-------------
 id           | ID of wrapper div
@@ -34,9 +47,21 @@ controls     | Enables all player features
 data-config  | Additional player configuration in JSON (see [Player configuration](#player-configuration))
 data-*       | Set specific configuration value for a key (see [Player configuration](#player-configuration))
 
+## Anchor element attributes (download)
+Attribute    | Description
+-------------|-------------
+id           | ID of wrapper div
+class        | Class of wrapper div
+href         | Magnet url or url to torrent file (required)
+type         | Use `application/x-bittorrent` for torrent file url in case if it has no `.torrent` extension
+controls     | Enables all player features
+data-config  | Additional player configuration in JSON (see [Player configuration](#player-configuration))
+data-*       | Set specific configuration value for a key (see [Player configuration](#player-configuration))
+
 ## Advanced usage
+
+Generates embed for video player:
 ```html
-...
     <div id="player" class="webtor" />
     <script>
         window.webtor = window.webtor || [];
@@ -76,12 +101,26 @@ data-*       | Set specific configuration value for a key (see [Player configura
             },
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
-...
+    <script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
 [Here is live example](https://webtor.io/sdk-example.html)
 
-## Player configuration
+Generate embed to download full torrent as zip-archive:
+```html
+    <div id="download" />
+    <script>
+        window.webtor = window.webtor || [];
+        window.webtor.push({
+            id: 'download',
+            mode: 'download',
+            magnet: 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F',
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+```
+
+## Embed configuration
+
 Attribute  | Description
 -----------|-------------
 id         | Element id where player will be embedded
@@ -89,6 +128,7 @@ magnet     | Magnet URI (torrentUrl ot magnet is required)
 width      | Width of an iframe (might be any css width value: 800px, 100%, etc... 800px by default)  
 height     | Height of an iframe (might be any css width value: 800px, 100%, etc... optional)
 torrentUrl | Url of the torrent-file (HTTP-server **MUST** include header "Access-Control-Allow-Origin: *" to allow torrent-file download on client-side)
+mode       | Sets embed mode (video/download, default: video)
 poster     | Url to the poster image (optional)
 on         | Callback-function to capture player events (optional)
 subtitles  | Array of subtitles (optional, see [Subtitle configuration](#subtitle-configuration) for more details)
@@ -104,6 +144,7 @@ controls   | Enables all features (true/false, default: true)
 features   | Enables or disables specific player features (optional)
 
 ## Subtitle configuration
+
 Attribute  | Description
 -----------|-------------
 srclang    | Two-letter language code
@@ -112,6 +153,7 @@ src        | `url` to the subtitle src, could be `vtt`, `srt` and `m3u8`. It sho
 default    | If true this track will be selected by default (true/false, optional)
 
 ## Player features
+
 Name        | Description
 ------------|-------------
 title       | Displays movie title
