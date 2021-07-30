@@ -196,7 +196,7 @@ PAUSE           |  The media is paused either by the user or programmatically
 ENDED           |  The media has reach the end
 SEEKING         |  The seeking attribute is set to true indicating that seeking has started
 SEEKED          |  The seeking attribute is set to false indicating that seeking has ended
-IDLE            |  The player is ready fot the first play
+IDLE            |  The player is ready for the first play
 
 
 Every event has following fields:
