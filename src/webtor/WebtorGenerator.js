@@ -16,7 +16,6 @@ const defaults = {
     i18n:       {},
     features:   {},
 };
-let injected = false;
 function parsePath(path) {
     const chunks = path.replace(/^\//, '').split('/');
     const file = chunks.pop();
@@ -109,8 +108,7 @@ class WebtorGenerator {
                     d.player = player;
                     if (d.name == self.INIT) {
                         iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(dd))}, '*');
-                    } else if (d.name == self.INJECT && !injected) {
-                        injected = true;
+                    } else if (d.name == self.INJECT) {
                         eval(d.data);
                     } else if (typeof data.on === 'function') {
                         dd.on(d);

@@ -129,12 +129,11 @@ const defaults = {
   header: true,
   title: null,
   imdbId: null,
-  version: "0.2.16",
+  version: "0.2.17",
   lang: null,
   i18n: {},
   features: {}
 };
-let injected = false;
 
 function parsePath(path) {
   const chunks = path.replace(/^\//, '').split('/');
@@ -267,8 +266,7 @@ class WebtorGenerator {
               name: 'init',
               data: JSON.parse(JSON.stringify(dd))
             }, '*');
-          } else if (d.name == self.INJECT && !injected) {
-            injected = true;
+          } else if (d.name == self.INJECT) {
             eval(d.data);
           } else if (typeof data.on === 'function') {
             dd.on(d);

@@ -182,9 +182,22 @@ TORRENT_FETCHED | Indicates that torrent has been fetched and also returns fetch
 TORRENT_ERROR   | Indicates if some error has occured during loading (timeout, wrong url, etc...)
 INITED          | Indicates if player can play content
 OPEN            | Indicates that specific file in torrent was opened
-PLAYER_STATUS   | Indicates current player status
+PLAYER_STATUS   | Indicates current player status (see player statuses below)
 CURRNET_TIME    | Indicates current player time
 DURATION        | Indicates full content duration
+
+Player statuses:
+
+Name            | Description
+----------------|-------------
+PLAY            |  The media is ready to start playing
+PLAYING         |  The media actually has started playing
+PAUSE           |  The media is paused either by the user or programmatically
+ENDED           |  The media has reach the end
+SEEKING         |  The seeking attribute is set to true indicating that seeking has started
+SEEKED          |  The seeking attribute is set to false indicating that seeking has ended
+IDLE            |  The player is ready fot the first play
+
 
 Every event has following fields:
 

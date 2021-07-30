@@ -1,6 +1,6 @@
 {
   "name": "@webtor/embed-sdk-js",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Webtor.io embed SDK for online torrent streaming and download on your site",
   "main": "src/index.js",
   "browserslist": "> 2%, not dead",
