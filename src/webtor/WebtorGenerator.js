@@ -2,7 +2,6 @@ import uuid from './uuid';
 import {iframeResize} from 'iframe-resizer';
 const defaults = {
     baseUrl:    'https://webtor.io',
-    // baseUrl: 'http://localhost:4000',
     width:      '800px',
     height:     null,
     mode:       'video',
@@ -13,6 +12,7 @@ const defaults = {
     imdbId:     null,
     version:    VERSION,
     lang:       null,
+    userlang:   null,
     i18n:       {},
     features:   {},
 };

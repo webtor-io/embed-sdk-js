@@ -138,7 +138,8 @@ header     | Shows header with current progress and title (true/false, default: 
 pwd        | Selected directory in torrent (optional)
 file       | Selected file in torrent in selected directory (optional, by default selects first video file)
 path       | Selected file by full file path in torrent, can be used instead of `pwd` and `file` (optional)
-lang       | Override language (optional)
+lang       | Override ui language (optional)
+userLang   | Override user language (optional)
 i18n       | Override i18n messages (optional)
 controls   | Enables all features (true/false, default: true)
 features   | Enables or disables specific player features (optional)
@@ -154,23 +155,24 @@ default    | If true this track will be selected by default (true/false, optiona
 
 ## Player features
 
-Name        | Description
-------------|-------------
-title       | Displays movie title
-p2pProgress | Displays p2p progress
-subtitles   | Enables subtitles control
-captions    | Enables showing captions for subtitles
-settings    | Enables settings control (cog)
-fullscreen  | Enables fullscreen control
-playpause   | Enables plays/pause control
-currentTime | Displays current time
-timeline    | Enables timeline control
-duration    | Displays total duration
-volume      | Enables volume control
-chromecast  | Enables chromecast support
-browse      | Enables file browser menu
-download    | Enables download button
-embed       | Enables embed button
+Name          | Description
+--------------|-------------
+title         | Displays movie title
+p2pProgress   | Displays p2p progress
+subtitles     | Enables subtitles control
+captions      | Enables showing captions for subtitles
+settings      | Enables settings control (cog)
+fullscreen    | Enables fullscreen control
+playpause     | Enables plays/pause control
+currentTime   | Displays current time
+timeline      | Enables timeline control
+duration      | Displays total duration
+volume        | Enables volume control
+chromecast    | Enables chromecast support
+browse        | Enables file browser menu
+download      | Enables download button
+embed         | Enables embed button
+autoSubtitles | Enables automatic subtitle loading
 
 ## Player events
 
@@ -211,7 +213,7 @@ Player methods:
 
 Name        | Description
 ------------|-------------
-play        | Starts playback (available only after first play-click in the player)
-pause       | Pauses playback (available only after first play-click in the player)
+play        | Starts playback
+pause       | Pauses playback
 setPosition | Sets player position in seconds (available only after first play-click in the player) 
 open        | Opens another file in torrent, full file-path should be provided

@@ -120,7 +120,6 @@ module.exports = _defineProperty;
 
 const defaults = {
   baseUrl: 'https://webtor.io',
-  // baseUrl: 'http://localhost:4000',
   width: '800px',
   height: null,
   mode: 'video',
@@ -131,6 +130,7 @@ const defaults = {
   imdbId: null,
   version: "0.2.17",
   lang: null,
+  userlang: null,
   i18n: {},
   features: {}
 };

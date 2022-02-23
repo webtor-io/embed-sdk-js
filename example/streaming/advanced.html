@@ -34,7 +34,8 @@
             padding: 0.5rem;
         }
     </style>
-    <script src="../../dist/index.min.js" charset="utf-8" async></script>
+    <!-- <script src="../../dist/index.min.js" charset="utf-8" async></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 </head>
 
 <body>
@@ -61,29 +62,31 @@
     <div id="player"></div>
     <div id="files"></div> 
     <script>
+        var el = document.getElementById('player');
         window.webtor = window.webtor || [];
         window.webtor.push({
             id: 'player',
             // baseUrl: 'https://webtor.io',
-            baseUrl: 'http://192.168.0.100:4000',
-            magnet: 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F',
+            // baseUrl: 'http://192.168.0.100:4000',
+            magnet: 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel',
             title: 'Example Movie',
             subtitles: [
-                {
-                    srclang: 'en',
-                    label: 'SHQIP',
-                    src: 'https://dl.dropboxusercontent.com/s/afsiiiw705h3vkk/Ava.2020.HDRip.srt?dl=0',
-                    default: true,
-                },
+                // {
+                //     srclang: 'en',
+                //     label: 'SHQIP',
+                //     src: 'https://dl.dropboxusercontent.com/s/afsiiiw705h3vkk/Ava.2020.HDRip.srt?dl=0',
+                //     default: true,
+                // },
             ],
             width: '100%',
             height: '100%',
             features: {
-                continue:    false,
+                autoSubtitles: true,
+                continue:      false,
                 // title:       false,
                 // p2pProgress: false,
                 // subtitles:   false,
-                settings:    false,
+                settings:      false,
                 // fullscreen:  false,
                 // playpause:   false,
                 // currentTime: false,
@@ -95,6 +98,7 @@
             on: function(e) {
                 if (e.name == window.webtor.TORRENT_FETCHED) {
                     console.log('Torrent fetched!', e.data.files);
+
                     var p = e.player;
                     var files = document.getElementById('files');
                     for (const f of e.data.files) {
