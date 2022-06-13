@@ -143,6 +143,7 @@ userLang   | Override user language (optional)
 i18n       | Override i18n messages (optional)
 controls   | Enables all features (true/false, default: true)
 features   | Enables or disables specific player features (optional)
+baseUrl    | Url of Webtor instance (By default: https://webtor.io)
 
 ## Subtitle configuration
 
@@ -217,3 +218,8 @@ play        | Starts playback
 pause       | Pauses playback
 setPosition | Sets player position in seconds (available only after first play-click in the player) 
 open        | Opens another file in torrent, full file-path should be provided
+
+# Using with your own Webtor instance:
+
+After installing Webtor instance according to the [instruction](https://github.com/webtor-io/helm-charts) just switch `baseUrl` configuration attribute to your own. 
+
