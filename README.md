@@ -219,7 +219,7 @@ pause       | Pauses playback
 setPosition | Sets player position in seconds (available only after first play-click in the player) 
 open        | Opens another file in torrent, full file-path should be provided
 
-# Using with your own Webtor instance:
+## Using with your own Webtor instance
 
 After installing Webtor instance according to the [instruction](https://github.com/webtor-io/helm-charts) just switch `baseUrl` configuration attribute to your own. 
 
