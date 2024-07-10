@@ -3,13 +3,6 @@ const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin({
-      include: /\.min\.js$/,
-      parallel: true,
-    })]
-  },
   mode: 'production',
   entry: {
     'index': './src/index.js',
@@ -28,10 +21,10 @@ module.exports = {
       },
     ],
   },
-  node: {
-    fs: 'empty',
-  },
   resolve: {
+    fallback: {
+      fs: false
+    },
     extensions: ['.js'],
   },
   plugins: [

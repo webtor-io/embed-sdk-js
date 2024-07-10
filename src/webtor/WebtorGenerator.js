@@ -15,6 +15,7 @@ const defaults = {
     userlang:   null,
     i18n:       {},
     features:   {},
+    referer:   window.location.href,
 };
 function parsePath(path) {
     const chunks = path.replace(/^\//, '').split('/');
