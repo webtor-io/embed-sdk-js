@@ -64,7 +64,7 @@ Generates embed for video player:
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@webtor/embed-sdk-js/dist/index.min.js" charset="utf-8" async></script>
 ```
-[Here is live example](https://webtor.io/sdk-example.html)
+[Here is live examples](https://webtor.io/embed/example)
 
 ## Embed configuration
 
