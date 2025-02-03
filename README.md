@@ -114,7 +114,7 @@ volume        | Enables volume control
 chromecast    | Enables chromecast support
 embed         | Enables embed button
 
-## Using with your own Webtor instance
+## Using with your own self-hosted Webtor instance
 
-After installing Webtor instance according to the [instruction](https://github.com/webtor-io/helm-charts) just switch `baseUrl` configuration attribute to your own. 
+After installing Webtor instance according to the [instruction](https://github.com/webtor-io/self-hosted/) just switch `baseUrl` configuration attribute to your own. 
 

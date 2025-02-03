@@ -1,5 +1,5 @@
 import uuid from './uuid';
-import {iframeResize} from 'iframe-resizer';
+import { initialize } from '@open-iframe-resizer/core';
 const defaults = {
     baseUrl:    'https://webtor.io',
     width:      '800px',
@@ -44,6 +44,7 @@ class WebtorGenerator {
     TORRENT_FETCHED = 'torrent fetched';
     TORRENT_ERROR   = 'torrent error';
     INIT            = 'init';
+    PLAY_CLICKED    = 'play_clicked';
     OPEN            = 'open';
     INJECT          = 'inject';
     INITED          = 'inited';
@@ -87,12 +88,10 @@ class WebtorGenerator {
         iframe.setAttribute('mozAllowFullScreen', '');
         iframe.scrolling = 'no';
         iframe.frameBorder = '0';
+        let unsubscribe;
         if (!dd.height) {
             iframe.onload = () => {
-                iframeResize({
-                    heightCalculationMethod: 'taggedElement',
-                    checkOrigin: false,
-                }, `#${elId}`);
+                unsubscribe = initialize({}, `#${elId}`)[0].unsubscribe;
             }
         }
         iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; fullscreen; picture-in-picture';
@@ -109,6 +108,8 @@ class WebtorGenerator {
                     d.player = player;
                     if (d.name == self.INIT) {
                         iframe.contentWindow.postMessage({id, name: 'init', data: JSON.parse(JSON.stringify(dd))}, '*');
+                    } else if (d.name == self.PLAY_CLICKED) {
+                        if (unsubscribe !== undefined) unsubscribe();
                     } else if (d.name == self.INJECT) {
                         eval(d.data);
                     } else if (typeof data.on === 'function') {

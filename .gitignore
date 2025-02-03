@@ -60,3 +60,5 @@ typings/
 .yalc
 
 .DS_Store
+
+.idea
