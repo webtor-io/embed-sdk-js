@@ -113,6 +113,7 @@ duration      | Displays total duration
 volume        | Enables volume control
 chromecast    | Enables chromecast support
 embed         | Enables embed button
+opensubtitles | Enables OpenSubtitles support
 
 ## Using with your own self-hosted Webtor instance
 
